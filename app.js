@@ -216,18 +216,9 @@ app.post('/send-media', async (req, res) => {
   const fileUrl = req.body.file;
 
   // const media = MessageMedia.fromFilePath('./image-example.png');
-  // const file = req.files.file;
-  // const media = new MessageMedia(file.mimetype, file.data.toString('base64'), file.name);
-  let mimetype;
-  const attachment = await axios.get(fileUrl, {
-    responseType: 'arraybuffer'
-  }).then(response => {
-    mimetype = response.headers['content-type'];
-    return response.data.toString('base64');
-  });
-
-  const media = new MessageMedia(mimetype, attachment, 'Media');
-
+   const file = req.files.file;
+   const media = new MessageMedia(file.mimetype, file.data.toString('base64'), file.name);
+  
   client.sendMessage(number, media, {
     caption: caption
   }).then(response => {
